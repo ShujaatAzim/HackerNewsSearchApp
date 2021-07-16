@@ -19,14 +19,14 @@ const SearchPage = () => {
       setSearched(true)
       setArticles(data.hits.filter(e => e.title !== null && e.title !== ""))
     })
-    .then(() => setLastSearched(searchTerm))
+    .then(() => setLastSearched(searchTerm.trim()))
     .then(() => setSearchTerm(""))
   }
 
   const handleTerms = e => {
     e.preventDefault();
     const terms = [...prevSearchTerms]
-    terms.push(searchTerm)
+    terms.push(searchTerm.trim())
     setPrevSearchTerms(terms)
   }
 
@@ -40,7 +40,7 @@ const SearchPage = () => {
           <br />
           <Input type="text" placeholder="enter query" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
           <br /><br />
-          <Button color="primary" type="submit" disabled={searchTerm === ""}>Search</Button>
+          <Button color="primary" type="submit" disabled={searchTerm.trim() === ""}>Search</Button>
         </Form>
       </div>
       <br />
