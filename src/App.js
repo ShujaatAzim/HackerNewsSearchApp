@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import HomePage from './Pages/HomePage';
@@ -9,8 +9,6 @@ import './App.css';
 
 const App = () => {
 
-  const [prevSearchTerms, setPrevSearchTerms] = useState([])
-
   return (
     <div>
       <div>
@@ -18,8 +16,8 @@ const App = () => {
       </div>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/search" component={() => <SearchPage prevSearchTerms={prevSearchTerms} setPrevSearchTerms={setPrevSearchTerms} />} />
-          <Route exact path="/history" component={() => <HistoryPage prevSearchTerms={prevSearchTerms} setPrevSearchTerms={setPrevSearchTerms} />} />
+          <Route exact path="/search" component={() => <SearchPage />} />
+          <Route exact path="/history" component={() => <HistoryPage />} />
           <Route component={NotFoundPage} />
         </Switch>
     </div>

@@ -1,17 +1,12 @@
 import React from 'react';
 
-const HistoryPage = props => {
-
-  const { prevSearchTerms, setPrevSearchTerms } = props;
+const HistoryPage = () => {
 
   return (
     <div>
-      <ul>
-        {prevSearchTerms.map(term => {
-          return <li>{term}</li>
-        })}   
-      </ul>
-      <button onClick={() => setPrevSearchTerms([])}>Clear Search History</button>
+      <div>
+        <h5>Previous searches for this session:</h5>
+      </div>
     </div>
   );
 }
