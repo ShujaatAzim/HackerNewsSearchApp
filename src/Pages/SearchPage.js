@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { prevSearchTermsState } from '../Recoil/atoms';
+import { Form, Button, Input } from 'semantic-ui-react';
 
-const SearchPage = props => {
+const SearchPage = () => {
 
   const [searchTerm, setSearchTerm] = useState("")
+  const [lastSearched, setLastSearched] = useState(null)
   const [searched, setSearched] = useState(false)
   const [prevSearchTerms, setPrevSearchTerms] = useRecoilState(prevSearchTermsState)
   const [articles, setArticles] = useState([])
@@ -17,6 +19,7 @@ const SearchPage = props => {
       setSearched(true)
       setArticles(data.hits.filter(e => e.title !== null && e.title !== ""))
     })
+    .then(() => setLastSearched(searchTerm))
     .then(() => setSearchTerm(""))
   }
 
@@ -32,24 +35,27 @@ const SearchPage = props => {
       <h3>Search Page</h3>
       <br />
       <div>
-        <form onSubmit={e => {handleSearch(e);handleTerms(e)}}>
-          <label>Search HackerNews:</label>
+        <Form onSubmit={e => {handleSearch(e);handleTerms(e)}}>
+          <Form.Field>Search HackerNews:</Form.Field>
           <br />
-          <input type="text" placeholder="enter search" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
-          <input type="submit" value="Search" />
-        </form>
+          <Input type="text" placeholder="enter query" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+          <br /><br />
+          <Button color="primary" type="submit" disabled={searchTerm === ""}>Search</Button>
+        </Form>
       </div>
-      <div>
-        {searched && articles.length !== 0 ? 
-        <ul>
-          {articles.map(article => {
-            return (
-              <li key={article.objectID}><a href={article.url} target="_blank" rel="noreferrer">{article.title}</a></li>
-            )
-          })}
-        </ul>
+      <br />
+        {searched && lastSearched && articles.length !== 0 ? 
+          <div>
+            <h4>Showing results for "{lastSearched}"</h4>
+            <ul>
+              {articles.map(article => {
+                return (
+                  <li key={article.objectID}><a href={article.url} target="_blank" rel="noreferrer">{article.title}</a></li>
+                )
+              })}
+            </ul>
+          </div>
         : articles.legnth === 0 ? <h5>No results match your query!</h5> : null }
-      </div>
     </div>
   );
 }

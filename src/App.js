@@ -13,13 +13,16 @@ const App = () => {
     <div>
       <div>
         <Navbar />
-      </div>
+      </div><br />
+      <br />
+      <div style={{ marginLeft: "2rem" }}>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/search" component={() => <SearchPage />} />
           <Route exact path="/history" component={() => <HistoryPage />} />
           <Route component={NotFoundPage} />
         </Switch>
+      </div>
     </div>
   );
 }

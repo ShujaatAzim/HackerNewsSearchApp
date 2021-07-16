@@ -1,16 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { Menu } from 'semantic-ui-react';
 
 const Navbar = () => {
 
+  const history = useHistory();
+  const location = useLocation();
+
   return (
-    <div>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/history">History</Link></li>
-        <li><Link to="/search">Search</Link></li>
-      </ul>
-    </div>
+    <Menu secondary>
+      <Menu.Item onClick={() => history.push("/")} disabled={location.pathname === "/"}>Home</Menu.Item>
+      <Menu.Item onClick={() => history.push("/history")} disabled={location.pathname === "/history"}>History</Menu.Item>
+      <Menu.Item onClick={() => history.push("/search")} disabled={location.pathname === "/search"}>Search</Menu.Item>
+      {/* <Menu.Menu position='right'>
+        <Menu.Item>
+          <Input icon='search' placeholder='Search...' />
+        </Menu.Item>
+      </Menu.Menu> */}
+    </Menu>
   );
 }
 
