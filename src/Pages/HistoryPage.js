@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import { prevSearchTermsState } from '../Recoil/atoms';
+import { Button } from 'semantic-ui-react';
 
 const HistoryPage = () => {
 
@@ -16,7 +17,7 @@ const HistoryPage = () => {
               return <li key={index}>{term}</li>
             })}   
           </ul>
-          <button onClick={() => setPrevSearchTerms([])}>Clear Search History</button>
+          <Button color="red" onClick={() => setPrevSearchTerms([])}>Clear Search History</Button>
         </div>
       }
     </div>

@@ -55,7 +55,7 @@ const SearchPage = () => {
               })}
             </ul>
           </div>
-        : articles.legnth === 0 ? <h5>No results match your query!</h5> : null }
+        : lastSearched && articles.length === 0 ? <h5>No results for "{lastSearched}" please try again!</h5> : null }
     </div>
   );
 }

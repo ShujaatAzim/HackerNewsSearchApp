@@ -10,8 +10,8 @@ const Navbar = () => {
   return (
     <Menu secondary>
       <Menu.Item onClick={() => history.push("/")} disabled={location.pathname === "/"}>Home</Menu.Item>
-      <Menu.Item onClick={() => history.push("/history")} disabled={location.pathname === "/history"}>History</Menu.Item>
       <Menu.Item onClick={() => history.push("/search")} disabled={location.pathname === "/search"}>Search</Menu.Item>
+      <Menu.Item onClick={() => history.push("/history")} disabled={location.pathname === "/history"}>History</Menu.Item>
       {/* <Menu.Menu position='right'>
         <Menu.Item>
           <Input icon='search' placeholder='Search...' />
