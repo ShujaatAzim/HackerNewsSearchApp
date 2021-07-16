@@ -13,7 +13,7 @@ const SearchPage = () => {
 
   const handleSearch = e => {
     e.preventDefault();
-    fetch(`http://hn.algolia.com/api/v1/search?query=${searchTerm}`)
+    fetch(`https://hn.algolia.com/api/v1/search?query=${searchTerm}`)
     .then(resp => resp.json())
     .then(data => {
       setSearched(true)
