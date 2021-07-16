@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { prevSearchTermsState } from '../Recoil/atoms';
 
-const SearchPage = () => {
+const SearchPage = props => {
 
   const [searchTerm, setSearchTerm] = useState("")
+  const [searched, setSearched] = useState(false)
+  const [prevSearchTerms, setPrevSearchTerms] = useRecoilState(prevSearchTermsState)
   const [articles, setArticles] = useState([])
 
   const handleSearch = e => {
@@ -10,9 +14,17 @@ const SearchPage = () => {
     fetch(`http://hn.algolia.com/api/v1/search?query=${searchTerm}`)
     .then(resp => resp.json())
     .then(data => {
-      console.log(data.hits)
-      setArticles(data.hits)
-    });
+      setSearched(true)
+      setArticles(data.hits.filter(e => e.title !== null && e.title !== ""))
+    })
+    .then(() => setSearchTerm(""))
+  }
+
+  const handleTerms = e => {
+    e.preventDefault();
+    const terms = [...prevSearchTerms]
+    terms.push(searchTerm)
+    setPrevSearchTerms(terms)
   }
 
   return (
@@ -20,7 +32,7 @@ const SearchPage = () => {
       <h3>Search Page</h3>
       <br />
       <div>
-        <form onSubmit={e => {handleSearch(e)}}>
+        <form onSubmit={e => {handleSearch(e);handleTerms(e)}}>
           <label>Search HackerNews:</label>
           <br />
           <input type="text" placeholder="enter search" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
@@ -28,7 +40,7 @@ const SearchPage = () => {
         </form>
       </div>
       <div>
-        {articles.length !== 0 ? 
+        {searched && articles.length !== 0 ? 
         <ul>
           {articles.map(article => {
             return (
@@ -36,7 +48,7 @@ const SearchPage = () => {
             )
           })}
         </ul>
-        : null }
+        : articles.legnth === 0 ? <h5>No results match your query!</h5> : null }
       </div>
     </div>
   );
